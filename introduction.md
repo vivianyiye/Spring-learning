@@ -3,6 +3,11 @@
 一.课程介绍
 
 1.Spring框架概述
+2002，首次推出了Spring框架的雏形：interface21框架
+2004年3月24日发布了1.0正式版
+Rod Johnson， Spring Framework的创始人，著名作者，悉尼大学音乐学博士
+
+Spring理念：使现有的技术更加容易使用，本身是一个大杂烩，整合了现有的技术框架
 
 2.IOC容器
 
@@ -16,7 +21,7 @@
 
 二.Spring框架概述
 
-1.Spring是轻量级的、开源的、JavaEE框架
+1.Spring是轻量级的、开源的、非入侵式的、JavaEE框架
 
 2.Spring可以解决企业应用开发的复杂性
 
@@ -31,6 +36,11 @@
 （4）方便和其它框架进行整合
 （5）方便进行事务操作
 （6）降低API开发难度
+
+5.SSH：Struct2+Spring+Hibernate
+SSM：SpringMVC+Spring+Mybatis
+
+6.总结：Spring就是一个轻量级的控制反转（IOC）和面向切面编程（AOP）的框架
 
 三.入门案例
 
@@ -47,8 +57,24 @@
 5.创建Spring配置文件，在配置文件配置创建的对象
 （1）Spring配置文件使用xml格式
 
+三.七大模块、三大思想
 
+四.扩展
 
+现代化的Java开发
+![image](https://user-images.githubusercontent.com/75358006/124070736-e0f0c580-da70-11eb-9f29-e208d606a1cb.png)
+
+Spring Boot：
+一个快速开发的脚手架
+基于它可以快速的开发单个微服务
+约定大于配置
+
+Spring Cloud：
+Spring Cloud是基于Spring Boot实现的
+
+因为现在大多数公司都在使用SpingBoot进行快速开发，学习SpringBoot的前提，需要完全掌握Spring及SpringMVC（承上启下）
+
+弊端：发展了太久，违背了原来的理念，配置十分繁琐，即“配置地狱”
 
 
 
