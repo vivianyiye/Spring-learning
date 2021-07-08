@@ -41,7 +41,7 @@ Spring理念：使现有的技术更加容易使用，本身是一个大杂烩�
 SSM：SpringMVC+Spring+Mybatis
 
 6.总结：Spring就是一个轻量级的控制反转（IOC）和面向切面编程（AOP）的框架
-
+###
 三.入门案例
 
 1.下载Spring5
@@ -56,8 +56,12 @@ SSM：SpringMVC+Spring+Mybatis
 
 5.创建Spring配置文件，在配置文件配置创建的对象
 （1）Spring配置文件使用xml格式
+###
 
 三.七大模块、三大思想
+![image](https://user-images.githubusercontent.com/75358006/124922031-a916ee80-e02b-11eb-84eb-8e6a79f78176.png)
+
+
 
 四.扩展
 
