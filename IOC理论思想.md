@@ -50,7 +50,23 @@ Spring容器在初始化时先读取配置文件，根据配置文件或元数�
 
 控制反转是一种通过描述（XML或注解）并通过第三方去生产或获取特定对象的方式。在Spring中实现控制反转的是IoC容器，其实现方法是依赖注入（Dependency Injection,DI）。
 
+3.HelloSpring
 
+Hello 对象是谁创建的 ?  hello 对象是由Spring创建的
+
+Hello 对象的属性是怎么设置的 ?  hello 对象的属性是由Spring容器设置的
+
+这个过程就叫控制反转 :
+
+控制 : 谁来控制对象的创建 , 传统应用程序的对象是由程序本身控制创建的 , 使用Spring后 , 对象是由Spring来创建的
+
+反转 : 程序本身不创建对象 , 而变成被动的接收对象 .
+
+依赖注入 : 就是利用set方法来进行注入的.
+
+IOC是一种编程思想，由主动的编程变成被动的接收
+
+可以通过newClassPathXmlApplicationContext去浏览一下底层源码 .
 
 
 
