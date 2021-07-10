@@ -68,6 +68,51 @@ IOC是一种编程思想，由主动的编程变成被动的接收
 
 可以通过newClassPathXmlApplicationContext去浏览一下底层源码 .
 
+![image](https://user-images.githubusercontent.com/75358006/125151633-1d5fa800-e17a-11eb-8619-6aa867a18e11.png)
+
+OK , 到了现在 , 我们彻底不用再程序中去改动了 , 要实现不同的操作 , 只需要在xml配置文件中进行修改 , 所谓的IoC,一句话搞定 : 对象由Spring 来创建 , 管理 , 装配 ! 
+
+4.IOC（Spring IOC容器）创建对象的方式
+
+1.使用无参构造方法创建对象，默认实现
+2.假设要是用有参构造创建对象
+（1）下标赋值
+<!--有参构造：下标赋值-->
+<bean id="user" class="com.kuang.pojo.User">
+    <constructor-arg index="0" value="yyLEARN"/>
+</bean>
+（2）类型
+<!--第二种，通过类型创建，不建议使用，只支持一个参数-->
+<bean id="user" class="com.kuang.pojo.User">
+    <constructor-arg type="java.lang.String" value="yylearn2"/>
+</bean>
+（3）参数名
+<!--第三种，直接通过参数名来设置-->
+<bean id="user" class="com.kuang.pojo.User">
+    <constructor-arg name="name" value="yylearn0"/>
+</bean>
+
+总结：在配置文件加载的时候，容器中管理的对象bean就已经初始化了
+
+5.Spring配置
+
+5.1 别名
+<!--别名，如果添加了别名，也能获取出来-->
+<alias name="user" alias="vivian"/>
+
+5.2 Bean的配置
+<!--没有用userT，对象也被创建了
+id：bean的唯一标识符，也就是相当于我们学的对象名
+class：bean对象所对应的全限定名：包名+类型
+name：也是别名，而且name可以同时取多个别名-->
+<bean id="userT" class="com.kuang.pojo.UserT" name="user2 u3,u4;u4"><!--空格，逗号，分号都可以分割-->
+     <property name="name" value="不知道叫啥了"/>
+</bean>
+
+5.3 import
+一般用于团队开发使用，可以将多个配置文件导入合并为一个
+假设，现在项目中有多个人进行开发，这三个人负责不同的类开发，不同的类需要注册在不同的bean中，我们可以利用import将所有人的beans.xml合并为一个总的！使用的时候，直接使用总的配置就可以了
+
 
 
 
