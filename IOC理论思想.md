@@ -355,6 +355,30 @@ xmlns:c="http://www.springframework.org/schema/c"
 3.其余的request（创建完对象）、session（session中）、application（全局），这些只能在web开发中使用到
 
 
+7.Bean的自动装配
+* 自动装配是Spring满足bean依赖的一种方式
+* Spring会在上下文中自动寻找，并自动给bean装配属性
+
+
+在Spring中有三种装配的方式
+1.在xml中显示的配置
+2.在java中显示的配置
+3.隐式的自动装配bean【重点】
+
+7.1 测试
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
