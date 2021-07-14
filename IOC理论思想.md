@@ -592,15 +592,73 @@ xml与注解：
 <context:annotation-config/>
 ```
 
+## 9.使用Java的方式配置Spring
+
+我们现在要完全不使用Spring的xml配置，全权交给Java来做
+JavaConfig是Spring的一个子项目，在Spring 4之后，它成为了一个核心功能
+
+![image](https://user-images.githubusercontent.com/75358006/125614987-6e0131b7-d547-49f6-a972-f8d36cc269bb.png)
+
+实体类
+
+```
+//这里这个注解的意思，就是说明这个类被Spring接管了，注册到了容器中
+@Component
+public class User {
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    @Value("yy")//属性注入值
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}
+```
+配置文件
+```
+//@Configuration代表这是个配置类，就和我们之前看的beans.xml一样的
+@Configuration //这个也会被Spring容器托管，注册到容器中，因为他本来就是个@Component
+@ComponentScan("com.kuang.pojo")
+@Import(KuangConfig2.class)
+public class KuangConfig {
+
+    //注册一个bean，就相当于我们之前写的一个bean标签
+    //这个方法的名字getUser，就相当于bean标签中的id属性
+    //这个方法的返回值，就相当于bean标签中的class属性
+    @Bean
+    public User getUser(){
+        return new User();//返回要注入到bean的对象
+    }
 
 
+}
+```
+测试类
+```
+public class MyTest {
 
+    public static void main(String[] args) {
 
+        //如果完全使用了配置类方式去做，我们就只能通过AnnotationConfig上下文获取容器，通过配置类的class对象加载
+        ApplicationContext context = new AnnotationConfigApplicationContext(KuangConfig.class);
+        User getUser = (User) context.getBean("getUser");
+        System.out.println(getUser.getName());
+    }
+}
+```
 
-
-
-
-
+这种纯Java的配置方式，在SpringBoot中随处可见
 
 
 
