@@ -367,7 +367,230 @@ xmlns:c="http://www.springframework.org/schema/c"
 
 7.1 测试
 
+1.环境搭建
+* 一个人有两个宠物
 
+
+7.2 ByName自动装配
+
+正常装配
+```
+<bean id="people" class="com.kuang.pojo.People">
+    <property name="name" value="vivian"/>
+    <property name="dog" ref="dog"/>
+    <property name="cat" ref="cat"/>
+</bean>
+```
+
+自动装配
+```
+<!--byName：会自动在容器上下文查找，和自己对象set方法后面的值对应的beanid-->
+<bean id="people" class="com.kuang.pojo.People" autowire="byName">
+    <property name="name" value="vivian"/>
+</bean>
+```
+
+7.3 ByType自动装配
+```
+<bean class="com.kuang.pojo.Cat"/>
+<bean class="com.kuang.pojo.Dog"/>
+
+
+<!--
+byName：会自动在容器上下文查找，和自己对象set方法后面的值对应的beanid
+byType：会自动在容器上下文查找，和自己对象世俗性类型相同的bean！（必须保证类型全局唯一）（可以省略id）
+-->
+<bean id="people" class="com.kuang.pojo.People" autowire="byType">
+    <property name="name" value="vivian"/>
+</bean>
+```
+
+小结：
+* byname的时候，需要保证所有bean的id唯一，并且这个bean需要和自动注入的属性的set方法的值一致
+* bytype的时候，需要保证所有bean的class唯一，并且这个bean需要和自动注入的属性的类型一致
+
+7.4 使用注解实现自动装配
+jdk1.5支持的注解，Spring2.5就支持注解了
+
+基于注解的配置的引入提出了一个问题，即这种方法是否比 XML“更好”。简短的答案是“取决于情况”。
+
+要使用注解须知：
+1.导入约束：context约束
+2.== 配置注解的支持：<context:annotation-config/> == 【重要】
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+
+</beans>
+```
+@Autowired
+直接在属性上使用即可！也可以在set方式上使用！
+
+使用Autowired我们可以不用编写Set方法了，前提是你这个自动装配的属性在IOC（Spring）容器中存在，且符合名字byname
+
+科普：
+
+```
+@Nullable  字段标记了这个注解，说明这个字段可以为null
+```
+
+```
+public @interface Autowired{
+    boolean reuqired() default true;
+}
+```
+
+测试代码
+```
+public class People {
+
+    //如果显式定义了Autowired的required属性为false，说明这个对象可以为null，否则不允许为空
+    //Autowired默认按照bytype类型，如果想按照名称buname要结合@Qualifier
+    @Autowired(required = false)
+    private Cat cat;
+    @Autowired
+    private Dog dog;
+    private String name;
+}
+```
+
+
+如果@Autowired自动装配的环境比较复杂，自动装配无法通过一个注解【@Autowired】完成的时候，我们可以使用@Qualifier(value="xxx")去配置@Autowired的使用，制定一个唯一的bean对象注入
+```
+public class People {
+
+    @Autowired
+    private Cat cat;
+    
+    @Autowired
+    @Qualifier(value="dog222")
+    private Dog dog;
+    private String name;
+    
+}
+```
+
+@Resource注解
+```
+public class People {
+    
+    @Resource(name = "cat111")
+    private Cat cat;
+    
+    @Resource
+    private Dog dog;
+    private String name;
+}
+```
+
+小结：
+@Resource和@Autowired的区别：
+
+* 都是用来自动装配的，都可以放在属性字段上
+* @Autowired默认通过bytype实现，多个相同类型需要配合qualifier()指定，对象必须存在
+* @Resource默认通过byname实现，如果找不到名字，则通过bytype实现！如果两个都找不到就报错！【常用】
+* 执行顺序不同：
+
+
+
+
+# 8.使用注解开发
+
+在Spring4之后要使用注解开发，必须要保证aop的包导入了
+
+![image](https://user-images.githubusercontent.com/75358006/125570441-e53f2f70-533d-4bf3-94ae-4b3d0797faad.png)
+
+使用注解需要导入context约束，增加注解的支持
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+
+</beans>
+```
+
+1.bean
+
+2.属性如何注入
+```
+@Component
+public class User {
+    //public String name = "vivian";
+    @Value("yy")//相当于<property name="name" value="yy"/>
+    public String name;
+
+    //@Value("yy")这样也行
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+
+3.衍生的注解
+@Component有几个衍生注解，我们在web开发中，会按照mvc三层架构分层
+* dao【@Repository】
+* service【@Service】
+* controller【@Controller】
+这四个朱姐功能都是一样的，都是代表将某个类注册到Spring容器中，装配Bean！
+
+4.自动装配置
+```
+-@Autowired，通过类型名字
+如果Autowired无法唯一自动装配上属性，则通过@Qualifier(value="xxx")去配置@Autowired的使用
+-@Nullable  字段标记了这个注解，说明这个字段可以为null
+-@Resource  通过名字，类型自动装配
+```
+
+5.作用域
+```
+//等价于<bean id="user" class="com.kuang.pojo.User"/>
+//组件
+@Component
+@Scope("prototype")
+public class User {
+
+    //public String name = "vivian";
+    @Value("yy")//相当于<property name="name" value="yy"/>
+    public String name;
+
+    //@Value("yy")这样也行
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+
+
+6.小结
+
+xml与注解：
+* xml更加万能，适用于任何场合！维护简单方便
+* 注解，不是自己的类使用不了，维护相对复杂
+最佳实践：
+* xml用来管理bean
+* 注解只负责完成属性的注入
+* 我们在使用的过程中，只需要注意一个问题：必须让注解生效，就需要开启注解的支持
+
+```
+<!--指定要扫描的包，这个包下的注解就会生效-->
+<context:component-scan base-package="com.kuang"/>
+<context:annotation-config/>
+```
 
 
 
