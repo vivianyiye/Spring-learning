@@ -1,4 +1,4 @@
-IOC理论推导（控制思想）
+# IOC理论推导（控制思想）
 
 1.UserDao接口
 2.UserDaoImpl实现类
@@ -39,7 +39,7 @@ public void setUserDao(UserDao userDao){
 ![image](https://user-images.githubusercontent.com/75358006/124963306-39682a00-e052-11eb-849a-2f6164db9df1.png)
 
 
-IOC本质
+# IOC本质
 
 IoC是Spring框架的核心内容，使用多种方式完美的实现了IoC，可以使用XML配置，也可以使用注解，新版本的Spring也可以零配置实现IoC。
 Spring容器在初始化时先读取配置文件，根据配置文件或元数据创建与组织对象存入容器中，程序使用时再从Ioc容器中取出需要的对象。
@@ -50,7 +50,7 @@ Spring容器在初始化时先读取配置文件，根据配置文件或元数�
 
 控制反转是一种通过描述（XML或注解）并通过第三方去生产或获取特定对象的方式。在Spring中实现控制反转的是IoC容器，其实现方法是依赖注入（Dependency Injection,DI）。
 
-3.HelloSpring
+# 3.HelloSpring
 
 Hello 对象是谁创建的 ?  hello 对象是由Spring创建的
 
@@ -72,7 +72,7 @@ IOC是一种编程思想，由主动的编程变成被动的接收
 
 OK , 到了现在 , 我们彻底不用再程序中去改动了 , 要实现不同的操作 , 只需要在xml配置文件中进行修改 , 所谓的IoC,一句话搞定 : 对象由Spring 来创建 , 管理 , 装配 ! 
 
-4.IOC（Spring IOC容器）创建对象的方式
+# 4.IOC（Spring IOC容器）创建对象的方式
 
 1.使用无参构造方法创建对象，默认实现
 2.假设要是用有参构造创建对象
@@ -103,7 +103,7 @@ OK , 到了现在 , 我们彻底不用再程序中去改动了 , 要实现不同
 
 总结：在配置文件加载的时候，容器中管理的对象bean就已经初始化了
 
-5.Spring配置
+# 5.Spring配置
 
 5.1 别名
 ```
@@ -138,7 +138,7 @@ name：也是别名，而且name可以同时取多个别名-->
 <import resource="beans3.xml"/>
 ```
 
-6.DI依赖注入
+# 6.DI依赖注入
 
 
 6.1 构造器注入
@@ -355,7 +355,7 @@ xmlns:c="http://www.springframework.org/schema/c"
 3.其余的request（创建完对象）、session（session中）、application（全局），这些只能在web开发中使用到
 
 
-7.Bean的自动装配
+# 7.Bean的自动装配
 * 自动装配是Spring满足bean依赖的一种方式
 * Spring会在上下文中自动寻找，并自动给bean装配属性
 
@@ -592,7 +592,7 @@ xml与注解：
 <context:annotation-config/>
 ```
 
-## 9.使用Java的方式配置Spring
+# 9.使用Java的方式配置Spring
 
 我们现在要完全不使用Spring的xml配置，全权交给Java来做
 JavaConfig是Spring的一个子项目，在Spring 4之后，它成为了一个核心功能
@@ -659,6 +659,38 @@ public class MyTest {
 ```
 
 这种纯Java的配置方式，在SpringBoot中随处可见
+
+
+# 10 代理模式
+
+为什么要学习代理模式？因为这就是Spring AOP的底层！【SpringAOP和SpringMVC】
+
+代理模式的分类：（23种设计模式之一）
+
+* 静态代理
+
+
+* 动态代理
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
