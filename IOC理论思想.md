@@ -672,17 +672,120 @@ public class MyTest {
 
 * 动态代理
 
+![image](https://user-images.githubusercontent.com/75358006/125906159-80c59e1d-4b91-4f0a-84ae-2ed8c5458e35.png)
+
+### 10.1 静态代理
+
+角色分析：
+
+* 抽象角色：一般会使用接口或者抽象类来解决
+* 真实角色：被代理的角色
+* 代理角色：代理真实角色，代理后一般会做一些附属操作
+* 客户：访问代理对象的人
+
+代码步骤：
+1.接口
+
+```
+//租房接口
+public interface Rent {
+
+    public void rent();
+}
+```
+
+2.真实角色：代理拓展真实角色的业务，让真实角色不用管一些业务
+
+```
+//房东：真实角色
+public class Host implements Rent{
+
+    @Override
+    public void rent() {
+        System.out.println("房东要出租房子！");
+    }
+}
+```
+
+3.代理角色
+
+```
+//代理
+public class Proxy implements Rent{
+
+    private Host host;
+
+    public Proxy() {
+    }
+
+    public Proxy(Host host) {
+        this.host = host;
+    }
+
+    public void rent() {
+        seeHouse();
+        host.rent();
+        hetong();
+        fare();
+    }
+
+    //看房
+    public void seeHouse(){
+        System.out.println(("中介带你看房"));
+    }
+
+    //收中介费
+    public void fare(){
+        System.out.println("收中介费");
+    }
+
+    //签合同
+    public void hetong(){
+        System.out.println("签租赁合同");
+    }
+
+}
+```
+
+
+4.客户端访问代理角色
+
+```
+public class Client {
+    public static void main(String[] args) {
+        //房东要租房子
+        Host host = new Host();
+        host.rent();
+
+        //代理来了，中介帮房东租房子，但是代理角色一般会有一些附属操作
+        Proxy proxy = new Proxy(host);
+
+        //你不用面对房东，直接找中介租房即可！
+        proxy.rent();
+    }
+}
+```
+
+代理模式的好处：
+* 可以使真实角色的操作更加纯粹！不用去关注一些公共的业务
+* 公共业务就交给了代理角色！实现了业务的分工！
+* 公共业务发生扩展的时候，方便集中管理！
+
+缺点：
+* 一个真实角色就会产生一个代理角色；代码量会翻倍，开发效率会变低
+
+
+### 10.2 加深理解
+
+代码对应08-demo02
+
+聊聊AOP：
+
+![image](https://user-images.githubusercontent.com/75358006/125929659-30316afa-fbc8-4f49-a5ab-93d8b8495072.png)
 
 
 
-
-
-
-
-
-
-
-
+### 10.3 动态代理
 
 
 
